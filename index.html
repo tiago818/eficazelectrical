@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eficaz Soluções Elétricas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <video autoplay muted loop class="background-video" id="background-video">
+        <source src="10846-226632924_small.mp4" type="video/mp4">
+        Seu navegador não suporta o elemento de vídeo.
+    </video>
+    <div class="header">
+        <img src="logo.png" alt="Eficaz Soluções Elétricas" onclick="goToHome()">
+    </div>
+    <div class="content">
+        <div class="welcome-message">
+            <h2 class="typing">DESENVOLVENDO SOLUÇÕES</h2>
+            <h2 class="typing">APLICANDO QUALIDADE</h2>
+        </div>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Em que podemos ajudar?" oninput="showSuggestions()">
+            <button onclick="showOptions()">Buscar</button>
+            <div class="suggestions" id="suggestions"></div>
+        </div>
+        <div class="options" id="options">
+            <div id="residencial">Residencial</div>
+            <div id="comercial">Comercial</div>
+            <div id="industrial">Industrial</div>
+        </div>
+    </div>
+
+    <div class="chatbot-container" id="chatbot">
+        <div class="chatbot-header">Assistente Virtual</div>
+        <div class="chatbot-body" id="chatbot-body"></div>
+        <div class="chatbot-footer">
+            <input type="text" id="chatbot-input" placeholder="Digite sua mensagem...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+    </div>
+    <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+
+    <script src="chatbot.js"></script>
+    <script>
+        const video = document.getElementById('background-video');
+        video.playbackRate = 0.5; // Reduz a velocidade do vídeo para metade
+
+        function goToHome() {
+            window.location.href = 'index.html';
+        }
+
+        const suggestionsList = [
+            "instalação elétrica residencial",
+            "manutenção elétrica residencial",
+            "reforma elétrica residencial",
+            "instalação elétrica comercial",
+            "manutenção elétrica comercial",
+            "reforma elétrica comercial",
+            "instalação elétrica industrial",
+            "manutenção elétrica industrial",
+            "reforma elétrica industrial",
+            "serviços elétricos para apartamentos",
+            "serviços elétricos para casas",
+            "serviços elétricos para lojas",
+            "serviços elétricos para indústrias"
+        ];
+
+        function showSuggestions() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = '';
+
+            if (input.length > 0) {
+                const filteredSuggestions = suggestionsList.filter(suggestion => suggestion.includes(input));
+                filteredSuggestions.forEach(suggestion => {
+                    const div = document.createElement('div');
+                    div.textContent = suggestion;
+                    div.onclick = () => {
+                        document.getElementById('searchInput').value = suggestion;
+                        suggestions.innerHTML = '';
+                    };
+                    suggestions.appendChild(div);
+                });
+                suggestions.style.display = 'block';
+            } else {
+                suggestions.style.display = 'none';
+            }
+        }
+
+        function showOptions() {
+            const input = document.getElementById('searchInput').value.toLowerCase();
+            const options = document.getElementById('options');
+            const residencial = document.getElementById('residencial');
+            const comercial = document.getElementById('comercial');
+            const industrial = document.getElementById('industrial');
+
+            if (input.includes('residencial') || input.includes('apartamentos') || input.includes('casas')) {
+                options.style.display = 'block';
+                residencial.style.display = 'inline-block';
+                comercial.style.display = 'none';
+                industrial.style.display = 'none';
+            } else if (input.includes('comercial') || input.includes('lojas')) {
+                options.style.display = 'block';
+                residencial.style.display = 'none';
+                comercial.style.display = 'inline-block';
+                industrial.style.display = 'none';
+            } else if (input.includes('industrial') || input.includes('indústrias')) {
+                options.style.display = 'block';
+                residencial.style.display = 'none';
+                comercial.style.display = 'none';
+                industrial.style.display = 'inline-block';
+            } else if (input.includes('instalação') || input.includes('manutenção') || input.includes('reforma') || input.includes('serviços elétricos')) {
+                options.style.display = 'block';
+                residencial.style.display = 'inline-block';
+                comercial.style.display = 'inline-block';
+                industrial.style.display = 'inline-block';
+            } else {
+                options.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
